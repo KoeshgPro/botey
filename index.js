@@ -8,13 +8,12 @@ function startBot() {
     port: parseInt(process.env.MC_PORT) || 13904,
     username: process.env.MC_USERNAME || 'KoeshMBOT',
     checkTimeoutInterval: 60 * 1000,
-    physicsEnabled: true
+    physicsEnabled: true // الجاذبية شغالة 100%
   });
 
   bot.on('spawn', () => {
-    console.log('✅ دخل البوت KoeshMBOT إلى السيرفر كلاعب طبيعي!');
+    console.log('✅ دخل البوت KoeshMBOT كلاعب طبيعي واقف على الأرض!');
     
-    // تسجيل الدخول فور الظهور
     setTimeout(() => {
       bot.chat(`/login ${PASSWORD}`);
     }, 1000);
