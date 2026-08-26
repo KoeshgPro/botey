@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer');
 
-function createBot() {
+function startBot() {
   const bot = mineflayer.createBot({
     host: process.env.MC_HOST || '162.55.241.186',
     port: parseInt(process.env.MC_PORT) || 13904,
@@ -12,14 +12,14 @@ function createBot() {
   });
 
   bot.on('error', err => console.log('❌ خطأ في الاتصال:', err.message));
-  
+
   bot.on('end', reason => {
-    console.log('⚠️ تم فصل البوت، سيتم إعادة الاتصال بعد 5 ثوانٍ... السبب:', reason);
-    setTimeout(createBot, 5000);
+    console.log('⚠️ تم فصل البوت، إعادة الاتصال بعد 5 ثوانٍ... السبب:', reason);
+    setTimeout(startBot, 5000);
   });
 }
 
-createBot();
+startBot();
 
-// منع الحاوية من الإغلاق
-setInterval(() => {}, 10000);
+// أبقِ عملية Node شغالة دائماً لعدم إغلاق الـ Container
+setInterval(() => {}, 100000);
