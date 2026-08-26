@@ -7,16 +7,22 @@ function startBot() {
     host: process.env.MC_HOST || '162.55.241.186',
     port: parseInt(process.env.MC_PORT) || 13904,
     username: process.env.MC_USERNAME || 'KoeshMBOT',
-    checkTimeoutInterval: 60 * 1000,
-    physicsEnabled: false
+    checkTimeoutInterval: 60 * 1000
   });
 
   bot.on('spawn', () => {
     console.log('✅ دخل البوت KoeshMBOT إلى السيرفر بنجاح!');
     
+    // إرسال حزم حركة خفيفة لإثبات الاتصال لـ Grim Anticheat
+    setTimeout(() => {
+      bot.setControlState('jump', true);
+      setTimeout(() => bot.setControlState('jump', false), 200);
+    }, 500);
+
+    // تسجيل الدخول
     setTimeout(() => {
       bot.chat(`/login ${PASSWORD}`);
-    }, 1000);
+    }, 1200);
   });
 
   bot.on('error', err => console.log('❌ خطأ في الاتصال:', err.message));
