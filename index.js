@@ -8,12 +8,21 @@ function startBot() {
     port: parseInt(process.env.MC_PORT) || 13904,
     username: process.env.MC_USERNAME || 'KoeshMBOT',
     checkTimeoutInterval: 60 * 1000,
-    physicsEnabled: true // الجاذبية شغالة 100%
+    physicsEnabled: true
   });
 
   bot.on('spawn', () => {
-    console.log('✅ دخل البوت KoeshMBOT كلاعب طبيعي واقف على الأرض!');
+    console.log('✅ دخل البوت، يجري فك التجميد وتنزيله للأرض...');
     
+    // إجبار البوت على تحديث موقعه وتفعيل الجاذبية فوراً
+    setTimeout(() => {
+      if (bot.entity) {
+        bot.setControlState('sneak', true);
+        setTimeout(() => bot.setControlState('sneak', false), 100);
+      }
+    }, 300);
+
+    // تسجيل الدخول
     setTimeout(() => {
       bot.chat(`/login ${PASSWORD}`);
     }, 1000);
