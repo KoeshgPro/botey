@@ -1,0 +1,59 @@
+hidden = [".config", "pnpm-lock.yaml", "tsconfig.json", ".gitignore"]
+compile = "clear"
+run = "pnpm run start"
+modules = ["nodejs-20"]
+
+[gitHubImport]
+	requiredFiles = [".replit", "replit.nix", ".config", "package.json", "pnpm-lock.yaml"]
+
+
+
+[nix]
+	channel = "stable-23_05"
+
+
+[packager]
+	language = "nodejs-pnpm"
+
+	[packager.features]
+		packageSearch = true
+		guessImports = true
+		enabledForHosting = true
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5500
+externalPort = 80
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm run start"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[deployment]
+deploymentTarget = "cloudrun"
